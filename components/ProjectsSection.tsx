@@ -23,7 +23,7 @@ import {
 const academicRecords = [
   {
     level: 'College',
-    period: '2020 - Present',
+    period: '2022 - Present',
     school: 'Carlos Hilado Memorial State University - Binalbagan Campus',
     program: 'BS Information Technology',
     description: 'Final year student passionate about technology and web development. Combining HUMSS background with technical skills to create user-centered solutions.',
@@ -41,7 +41,7 @@ const academicRecords = [
   },
   {
     level: 'Senior High School',
-    period: '2018 - 2020',
+    period: '2021 - 2022',
     school: 'San Ramon Catholic School',
     program: 'Humanities and Social Sciences (HUMSS)',
     description: 'Developed strong communication and critical thinking skills through humanities subjects. Interest in technology grew through elective courses.',
@@ -59,7 +59,7 @@ const academicRecords = [
   },
   {
     level: 'Junior High School',
-    period: '2014 - 2018',
+    period: '2019 - 2020',
     school: 'San Ramon Catholic School',
     program: 'Regular Academic Track',
     description: 'Built foundational knowledge across various subjects. Started exploring computer technology as a hobby.',
@@ -77,7 +77,7 @@ const academicRecords = [
   },
   {
     level: 'Elementary',
-    period: '2008 - 2014',
+    period: '2015 - 2016',
     school: 'Cong. Elesio P. Limsiaco Memorial School',
     program: 'Elementary Education',
     description: 'Basic education focusing on fundamental skills. Enjoyed using computers in the school lab.',
