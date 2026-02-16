@@ -5,8 +5,8 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'BSIT Student Portfolio',
-  description: '4th Year BSIT Student Portfolio with 3D Space Background',
+  title: 'Student Portfolio',
+  description: '4th Year BSIT Student',
 };
 
 export default function RootLayout({

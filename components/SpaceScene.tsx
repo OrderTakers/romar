@@ -2,7 +2,7 @@
 
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Stars, Sparkles, OrbitControls } from '@react-three/drei';
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useEffect, useState } from 'react';
 import * as THREE from 'three';
 
 function WhiteDwarfStar() {
@@ -217,9 +217,20 @@ function BinaryStarSystem() {
 }
 
 export default function SpaceScene() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <Canvas
-      camera={{ position: [0, 0, 20], fov: 60 }}
+      camera={{ position: [0, 0, 20], fov: isMobile ? 75 : 60 }}
       style={{ 
         position: 'fixed', 
         top: 0, 
@@ -232,11 +243,11 @@ export default function SpaceScene() {
       <pointLight position={[-20, -10, 20]} intensity={0.2} color="#ffffff" />
       <pointLight position={[0, 20, 10]} intensity={0.1} color="#ffffff" />
       
-      {/* Stars layers */}
+      {/* Stars layers - Reduced count for mobile */}
       <Stars
         radius={500}
         depth={150}
-        count={8000}
+        count={isMobile ? 3000 : 8000}
         factor={8}
         saturation={0}
         fade
@@ -246,7 +257,7 @@ export default function SpaceScene() {
       <Stars
         radius={300}
         depth={100}
-        count={5000}
+        count={isMobile ? 2000 : 5000}
         factor={6}
         saturation={0}
         fade
@@ -254,7 +265,7 @@ export default function SpaceScene() {
       />
       
       <Sparkles
-        count={500}
+        count={isMobile ? 200 : 500}
         size={2}
         speed={0.1}
         opacity={0.7}
@@ -263,7 +274,7 @@ export default function SpaceScene() {
       />
       
       <Sparkles
-        count={200}
+        count={isMobile ? 100 : 200}
         size={4}
         speed={0.05}
         opacity={0.5}
@@ -282,11 +293,11 @@ export default function SpaceScene() {
       {/* Fog effect */}
       <fog attach="fog" args={['#000000', 30, 150]} />
       
-      {/* OrbitControls - Allows you to move the camera */}
+      {/* OrbitControls - Disable or simplify for mobile */}
       <OrbitControls 
-        enableZoom={true}
-        enablePan={true}
-        enableRotate={true}
+        enableZoom={!isMobile}
+        enablePan={!isMobile}
+        enableRotate={!isMobile}
         zoomSpeed={0.6}
         panSpeed={0.8}
         rotateSpeed={0.8}

@@ -5,72 +5,63 @@ import {
   School, 
   GraduationCap, 
   BookOpen, 
-  Award,
   Calendar,
   MapPin,
-  Users,
-  Star,
-  ChevronRight,
-  Heart,
-  Target,
   Users2,
+  ChevronRight,
+  Brain,
+  Target,
   Globe,
   PenTool,
-  Brain,
   Book
 } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 const academicRecords = [
   {
     level: 'College',
     period: '2022 - Present',
-    school: 'Carlos Hilado Memorial State University - Binalbagan Campus',
+    school: 'CHMSU - Binalbagan',
     program: 'BS Information Technology',
-    description: 'Final year student passionate about technology and web development. Combining HUMSS background with technical skills to create user-centered solutions.',
+    description: 'Final year student passionate about technology and web development.',
     experiences: [
       'Active in class projects and group activities',
-      'Developed basic web applications for coursework',
-      'Participated in university IT workshops',
-      'Volunteered for campus event documentation',
+      'Developed basic web applications',
       'Learning full-stack development independently'
     ],
-    courses: ['Web Technologies', 'Database Systems', 'Object-Oriented Programming', 'Networking', 'IT Electives'],
+    courses: ['Web Technologies', 'Database Systems', 'OOP', 'Networking'],
     color: 'from-blue-600 to-cyan-600',
     icon: GraduationCap,
     gpa: '2.8'
   },
   {
-    level: 'Senior High School',
+    level: 'Senior High',
     period: '2021 - 2022',
     school: 'San Ramon Catholic School',
-    program: 'Humanities and Social Sciences (HUMSS)',
-    description: 'Developed strong communication and critical thinking skills through humanities subjects. Interest in technology grew through elective courses.',
+    program: 'Humanities (HUMSS)',
+    description: 'Developed strong communication and critical thinking skills.',
     experiences: [
-      'Active in class discussions and debates',
-      'Participated in school journalism activities',
-      'Developed research papers on social issues',
-      'Learned basic computer applications',
-      'Volunteered for community outreach programs'
+      'Active in class discussions',
+      'Participated in journalism',
+      'Developed research papers'
     ],
-    courses: ['Creative Writing', 'Social Sciences', 'Philosophy', 'Communication', 'Research'],
+    courses: ['Creative Writing', 'Social Sciences', 'Philosophy'],
     color: 'from-purple-600 to-pink-600',
     icon: Globe,
     average: '85.5'
   },
   {
-    level: 'Junior High School',
+    level: 'Junior High',
     period: '2019 - 2020',
     school: 'San Ramon Catholic School',
-    program: 'Regular Academic Track',
-    description: 'Built foundational knowledge across various subjects. Started exploring computer technology as a hobby.',
+    program: 'Regular Academic',
+    description: 'Built foundational knowledge across various subjects.',
     experiences: [
       'Active in classroom activities',
-      'Participated in school events',
       'Learned basic computer operations',
-      'Enjoyed English and Social Studies',
       'Developed interest in digital arts'
     ],
-    courses: ['Computer Education', 'English', 'Filipino', 'Science', 'Mathematics'],
+    courses: ['Computer Education', 'English', 'Science'],
     color: 'from-green-600 to-emerald-600',
     icon: BookOpen,
     average: '84.2'
@@ -80,15 +71,13 @@ const academicRecords = [
     period: '2015 - 2016',
     school: 'Cong. Elesio P. Limsiaco Memorial School',
     program: 'Elementary Education',
-    description: 'Basic education focusing on fundamental skills. Enjoyed using computers in the school lab.',
+    description: 'Basic education focusing on fundamental skills.',
     experiences: [
       'Participated in classroom activities',
       'Learned basic computer operations',
-      'Enjoyed mathematics and arts',
-      'Active in school programs',
-      'Developed early interest in technology'
+      'Active in school programs'
     ],
-    courses: ['Mathematics', 'English', 'Science', 'Filipino', 'Computer Basics'],
+    courses: ['Mathematics', 'English', 'Science', 'Computer Basics'],
     color: 'from-amber-600 to-orange-600',
     icon: School,
     average: '83.5'
@@ -96,105 +85,103 @@ const academicRecords = [
 ];
 
 export default function AcademicRecordsSection() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
-    <section className="mb-16">
+    <section className="mb-12 md:mb-16">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="backdrop-blur-lg bg-black/30 border border-gray-800 rounded-2xl p-8"
+        className="backdrop-blur-lg bg-black/30 border border-gray-800 rounded-xl md:rounded-2xl p-4 md:p-8"
       >
-        <div className="flex items-center gap-3 mb-8">
-          <GraduationCap className="w-8 h-8 text-blue-400" />
-          <h2 className="text-3xl font-bold">Academic Journey</h2>
-          <span className="text-sm px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full border border-blue-500/30">
-            HUMSS to IT Path
+        <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-6 md:mb-8">
+          <GraduationCap className="w-6 h-6 md:w-8 md:h-8 text-blue-400" />
+          <h2 className="text-2xl md:text-3xl font-bold">Academic Journey</h2>
+          <span className="text-xs px-2 py-0.5 md:px-3 md:py-1 bg-blue-500/20 text-blue-300 rounded-full border border-blue-500/30">
+            HUMSS to IT
           </span>
         </div>
         
-        {/* Timeline */}
+        {/* Timeline - Mobile optimized */}
         <div className="relative">
-          {/* Vertical Timeline Line */}
-          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-emerald-500 md:left-1/2 md:transform md:-translate-x-1/2"></div>
+          {/* Timeline Line - Adjusted for mobile */}
+          <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-emerald-500 md:left-1/2"></div>
           
           {academicRecords.map((record, index) => (
             <motion.div
               key={record.level}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+              initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              className={`relative mb-12 md:w-1/2 ${
-                index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:ml-auto md:pl-12'
-              }`}
+              className="relative mb-6 md:mb-12 md:w-1/2 md:ml-auto"
             >
               {/* Timeline Dot */}
-              <div className={`absolute left-6 w-4 h-4 rounded-full bg-gradient-to-r ${record.color} border-4 border-gray-900 md:left-1/2 md:transform md:-translate-x-1/2`}></div>
+              <div className={`absolute left-2 top-2 w-4 h-4 rounded-full bg-gradient-to-r ${record.color} border-4 border-gray-900 md:left-0 md:-translate-x-1/2`}></div>
               
-              <div className={`ml-16 md:ml-0 ${
-                index % 2 === 0 ? 'md:mr-16' : 'md:ml-16'
-              }`}>
+              <div className="ml-10 md:ml-12">
                 {/* Card */}
-                <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-2xl p-6 hover:border-blue-500/50 transition-all group">
+                <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-xl md:rounded-2xl p-4 md:p-6 hover:border-blue-500/50 transition-all">
                   {/* Header */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className={`p-3 rounded-xl bg-gradient-to-r ${record.color}`}>
-                        <record.icon className="w-6 h-6 text-white" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold">{record.level}</h3>
-                        <div className="flex items-center gap-2 text-sm text-gray-400 mt-1">
-                          <Calendar className="w-4 h-4" />
-                          <span>{record.period}</span>
-                        </div>
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className={`p-2 md:p-3 rounded-xl bg-gradient-to-r ${record.color}`}>
+                      <record.icon className="w-4 h-4 md:w-6 md:h-6 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-base md:text-xl font-bold">{record.level}</h3>
+                      <div className="flex items-center gap-1 text-xs text-gray-400 mt-0.5">
+                        <Calendar className="w-3 h-3 md:w-4 md:h-4" />
+                        <span>{record.period}</span>
                       </div>
                     </div>
-                    
-                    {record.level === 'Senior High School' && (
-                      <div className="flex items-center gap-1 bg-gradient-to-r from-purple-600/20 to-pink-600/20 text-purple-300 px-3 py-1 rounded-full border border-purple-500/30">
-                        <PenTool className="w-4 h-4" />
-                        <span className="text-sm">HUMSS</span>
-                      </div>
-                    )}
                   </div>
                   
                   {/* School Info */}
-                  <div className="mb-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <MapPin className="w-4 h-4 text-blue-400" />
-                      <h4 className="text-lg font-semibold">{record.school}</h4>
+                  <div className="mb-3">
+                    <div className="flex items-center gap-1 mb-1">
+                      <MapPin className="w-3 h-3 md:w-4 md:h-4 text-blue-400" />
+                      <h4 className="text-sm md:text-base font-semibold">{record.school}</h4>
                     </div>
-                    <p className="text-gray-300 mb-2">{record.program}</p>
-                    <p className="text-gray-400 text-sm">{record.description}</p>
+                    <p className="text-xs md:text-sm text-gray-300 mb-1">{record.program}</p>
+                    <p className="text-xs text-gray-400">{record.description}</p>
                   </div>
                   
-                  {/* Experiences */}
-                  <div className="mb-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Users2 className="w-4 h-4 text-green-400" />
-                      <h5 className="font-semibold">Key Experiences</h5>
+                  {/* Experiences - Show fewer on mobile */}
+                  <div className="mb-3">
+                    <div className="flex items-center gap-1 mb-1">
+                      <Users2 className="w-3 h-3 md:w-4 md:h-4 text-green-400" />
+                      <h5 className="text-xs md:text-sm font-semibold">Key Experiences</h5>
                     </div>
-                    <ul className="space-y-1">
-                      {record.experiences.slice(0, 3).map((experience, idx) => (
-                        <li key={idx} className="flex items-start gap-2">
-                          <ChevronRight className="w-3 h-3 text-blue-400 mt-1 flex-shrink-0" />
-                          <span className="text-sm text-gray-300">{experience}</span>
+                    <ul className="space-y-0.5">
+                      {record.experiences.slice(0, isMobile ? 2 : 3).map((experience, idx) => (
+                        <li key={idx} className="flex items-start gap-1">
+                          <ChevronRight className="w-2 h-2 md:w-3 md:h-3 text-blue-400 mt-0.5 flex-shrink-0" />
+                          <span className="text-xs text-gray-300">{experience}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                   
-                  {/* Courses */}
+                  {/* Courses - Simplified for mobile */}
                   <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Book className="w-4 h-4 text-purple-400" />
-                      <h5 className="font-semibold">Main Subjects</h5>
+                    <div className="flex items-center gap-1 mb-1">
+                      <Book className="w-3 h-3 md:w-4 md:h-4 text-purple-400" />
+                      <h5 className="text-xs md:text-sm font-semibold">Main Subjects</h5>
                     </div>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1">
                       {record.courses.map((course, idx) => (
                         <span
                           key={idx}
-                          className="px-3 py-1 bg-gray-800/50 text-gray-300 rounded-full text-sm border border-gray-700"
+                          className="px-1.5 py-0.5 bg-gray-800/50 text-gray-300 rounded-full text-[10px] md:text-xs border border-gray-700"
                         >
                           {course}
                         </span>
@@ -203,22 +190,22 @@ export default function AcademicRecordsSection() {
                   </div>
                   
                   {/* Stats */}
-                  <div className="mt-6 pt-6 border-t border-gray-800 grid grid-cols-2 gap-4">
+                  <div className="mt-3 pt-3 border-t border-gray-800 grid grid-cols-2 gap-2">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-blue-400">
+                      <div className="text-sm md:text-xl font-bold text-blue-400">
                         {record.gpa || record.average}
                       </div>
-                      <div className="text-xs text-gray-400">
+                      <div className="text-[10px] md:text-xs text-gray-400">
                         {record.level === 'College' ? 'GPA' : 'Average'}
                       </div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-green-400">
+                      <div className="text-sm md:text-xl font-bold text-green-400">
                         {record.level === 'College' ? '4' : 
-                         record.level === 'Senior High School' ? '2' : 
-                         record.level === 'Junior High School' ? '4' : '6'}
+                         record.level === 'Senior High' ? '2' : 
+                         record.level === 'Junior High' ? '4' : '6'}
                       </div>
-                      <div className="text-xs text-gray-400">Years</div>
+                      <div className="text-[10px] md:text-xs text-gray-400">Years</div>
                     </div>
                   </div>
                 </div>
@@ -227,56 +214,56 @@ export default function AcademicRecordsSection() {
           ))}
         </div>
         
-        {/* Academic Journey Summary */}
+        {/* Academic Journey Summary - Simplified for mobile */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-12 backdrop-blur-lg bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-800/30 rounded-2xl p-8"
+          className="mt-6 md:mt-12 backdrop-blur-lg bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-800/30 rounded-xl md:rounded-2xl p-4 md:p-8"
         >
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
             <div className="text-center">
-              <div className="text-4xl font-bold text-white mb-2">4</div>
-              <div className="text-gray-300">Education Levels</div>
+              <div className="text-xl md:text-3xl lg:text-4xl font-bold text-white mb-0.5 md:mb-2">4</div>
+              <div className="text-xs md:text-sm text-gray-300">Education Levels</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-green-400 mb-2">HUMSS</div>
-              <div className="text-gray-300">SHS Strand</div>
+              <div className="text-lg md:text-2xl lg:text-4xl font-bold text-green-400 mb-0.5 md:mb-2">HUMSS</div>
+              <div className="text-xs md:text-sm text-gray-300">SHS Strand</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-yellow-400 mb-2">16+</div>
-              <div className="text-gray-300">Years Learning</div>
+              <div className="text-lg md:text-2xl lg:text-4xl font-bold text-yellow-400 mb-0.5 md:mb-2">16+</div>
+              <div className="text-xs md:text-sm text-gray-300">Years Learning</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-pink-400 mb-2">IT</div>
-              <div className="text-gray-300">College Course</div>
+              <div className="text-lg md:text-2xl lg:text-4xl font-bold text-pink-400 mb-0.5 md:mb-2">IT</div>
+              <div className="text-xs md:text-sm text-gray-300">College Course</div>
             </div>
           </div>
           
-          <div className="mt-8">
-            <h4 className="text-xl font-semibold mb-4 text-center">From HUMSS to IT: My Educational Path</h4>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center p-4 bg-black/30 rounded-xl border border-gray-800">
-                <Brain className="w-8 h-8 text-purple-400 mx-auto mb-2" />
-                <h5 className="font-semibold mb-2">HUMSS Foundation</h5>
-                <p className="text-sm text-gray-400">Developed communication, critical thinking, and research skills</p>
+          <div className="mt-4 md:mt-8">
+            <h4 className="text-sm md:text-xl font-semibold mb-3 md:mb-4 text-center">From HUMSS to IT</h4>
+            <div className="grid grid-cols-1 gap-2 md:grid-cols-3 md:gap-4">
+              <div className="text-center p-2 md:p-4 bg-black/30 rounded-lg border border-gray-800">
+                <Brain className="w-5 h-5 md:w-8 md:h-8 text-purple-400 mx-auto mb-1 md:mb-2" />
+                <h5 className="text-xs md:text-base font-semibold mb-0.5 md:mb-2">HUMSS Foundation</h5>
+                <p className="text-[10px] md:text-xs text-gray-400">Communication & critical thinking</p>
               </div>
-              <div className="text-center p-4 bg-black/30 rounded-xl border border-gray-800">
-                <Target className="w-8 h-8 text-blue-400 mx-auto mb-2" />
-                <h5 className="font-semibold mb-2">Transition Phase</h5>
-                <p className="text-sm text-gray-400">Applied humanities skills to understand user needs in technology</p>
+              <div className="text-center p-2 md:p-4 bg-black/30 rounded-lg border border-gray-800">
+                <Target className="w-5 h-5 md:w-8 md:h-8 text-blue-400 mx-auto mb-1 md:mb-2" />
+                <h5 className="text-xs md:text-base font-semibold mb-0.5 md:mb-2">Transition Phase</h5>
+                <p className="text-[10px] md:text-xs text-gray-400">Applying humanities to tech</p>
               </div>
-              <div className="text-center p-4 bg-black/30 rounded-xl border border-gray-800">
-                <GraduationCap className="w-8 h-8 text-green-400 mx-auto mb-2" />
-                <h5 className="font-semibold mb-2">IT Pursuit</h5>
-                <p className="text-sm text-gray-400">Combining technical skills with human-centered design approach</p>
+              <div className="text-center p-2 md:p-4 bg-black/30 rounded-lg border border-gray-800">
+                <GraduationCap className="w-5 h-5 md:w-8 md:h-8 text-green-400 mx-auto mb-1 md:mb-2" />
+                <h5 className="text-xs md:text-base font-semibold mb-0.5 md:mb-2">IT Pursuit</h5>
+                <p className="text-[10px] md:text-xs text-gray-400">Human-centered technology</p>
               </div>
             </div>
           </div>
           
-          <div className="mt-6 text-center">
-            <p className="text-gray-300">
-              <span className="text-blue-400 font-semibold">"My HUMSS background gives me unique perspective in understanding user needs and creating human-centered technology solutions."</span>
+          <div className="mt-4 md:mt-6 text-center">
+            <p className="text-xs md:text-sm text-gray-300">
+              <span className="text-blue-400 font-semibold">"HUMSS background gives unique perspective in creating human-centered solutions."</span>
             </p>
           </div>
         </motion.div>
