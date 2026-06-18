@@ -20,8 +20,8 @@ import { useState, useEffect } from 'react';
 const academicRecords = [
   {
     level: 'College',
-    period: '2022 - Present',
-    school: 'CHMSU - Binalbagan',
+    period: '2022 - 2026',
+    school: 'Carlos Hilado Memorial State University - Binalbagan Campus',
     program: 'BS Information Technology',
     description: 'Final year student passionate about technology and web development.',
     experiences: [
@@ -112,109 +112,126 @@ export default function AcademicRecordsSection() {
           </span>
         </div>
         
-        {/* Timeline - Mobile optimized */}
+        {/* Timeline */}
         <div className="relative">
-          {/* Timeline Line - Adjusted for mobile */}
-          <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-emerald-500 md:left-1/2"></div>
+          {/* Timeline Line - Centered on desktop, left on mobile */}
+          <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-emerald-500 md:left-1/2 md:-translate-x-0.5"></div>
           
-          {academicRecords.map((record, index) => (
-            <motion.div
-              key={record.level}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="relative mb-6 md:mb-12 md:w-1/2 md:ml-auto"
-            >
-              {/* Timeline Dot */}
-              <div className={`absolute left-2 top-2 w-4 h-4 rounded-full bg-gradient-to-r ${record.color} border-4 border-gray-900 md:left-0 md:-translate-x-1/2`}></div>
-              
-              <div className="ml-10 md:ml-12">
-                {/* Card */}
-                <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-xl md:rounded-2xl p-4 md:p-6 hover:border-blue-500/50 transition-all">
-                  {/* Header */}
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className={`p-2 md:p-3 rounded-xl bg-gradient-to-r ${record.color}`}>
-                      <record.icon className="w-4 h-4 md:w-6 md:h-6 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-base md:text-xl font-bold">{record.level}</h3>
-                      <div className="flex items-center gap-1 text-xs text-gray-400 mt-0.5">
-                        <Calendar className="w-3 h-3 md:w-4 md:h-4" />
-                        <span>{record.period}</span>
+          {academicRecords.map((record, index) => {
+            // Alternate sides: even index = right, odd index = left
+            const isEven = index % 2 === 0;
+            
+            return (
+              <motion.div
+                key={record.level}
+                initial={{ opacity: 0, x: isEven ? 20 : -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                className={`relative mb-6 md:mb-12 ${
+                  isEven 
+                    ? 'md:ml-auto md:pl-8 md:w-1/2' 
+                    : 'md:mr-auto md:pr-8 md:w-1/2'
+                }`}
+              >
+                {/* Timeline Dot */}
+                <div className={`absolute left-2 top-2 w-4 h-4 rounded-full bg-gradient-to-r ${record.color} border-4 border-gray-900 md:left-auto ${
+                  isEven 
+                    ? 'md:-left-4' 
+                    : 'md:-right-4 md:left-auto'
+                }`}></div>
+                
+                <div className={`ml-10 md:ml-0 ${
+                  isEven ? 'md:ml-0' : 'md:mr-0'
+                }`}>
+                  {/* Card */}
+                  <div className={`bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-xl md:rounded-2xl p-4 md:p-6 hover:border-blue-500/50 transition-all ${
+                    !isEven && 'md:mr-2'
+                  }`}>
+                    {/* Header */}
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className={`p-2 md:p-3 rounded-xl bg-gradient-to-r ${record.color}`}>
+                        <record.icon className="w-4 h-4 md:w-6 md:h-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-base md:text-xl font-bold">{record.level}</h3>
+                        <div className="flex items-center gap-1 text-xs text-gray-400 mt-0.5">
+                          <Calendar className="w-3 h-3 md:w-4 md:h-4" />
+                          <span>{record.period}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  
-                  {/* School Info */}
-                  <div className="mb-3">
-                    <div className="flex items-center gap-1 mb-1">
-                      <MapPin className="w-3 h-3 md:w-4 md:h-4 text-blue-400" />
-                      <h4 className="text-sm md:text-base font-semibold">{record.school}</h4>
-                    </div>
-                    <p className="text-xs md:text-sm text-gray-300 mb-1">{record.program}</p>
-                    <p className="text-xs text-gray-400">{record.description}</p>
-                  </div>
-                  
-                  {/* Experiences - Show fewer on mobile */}
-                  <div className="mb-3">
-                    <div className="flex items-center gap-1 mb-1">
-                      <Users2 className="w-3 h-3 md:w-4 md:h-4 text-green-400" />
-                      <h5 className="text-xs md:text-sm font-semibold">Key Experiences</h5>
-                    </div>
-                    <ul className="space-y-0.5">
-                      {record.experiences.slice(0, isMobile ? 2 : 3).map((experience, idx) => (
-                        <li key={idx} className="flex items-start gap-1">
-                          <ChevronRight className="w-2 h-2 md:w-3 md:h-3 text-blue-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-xs text-gray-300">{experience}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  {/* Courses - Simplified for mobile */}
-                  <div>
-                    <div className="flex items-center gap-1 mb-1">
-                      <Book className="w-3 h-3 md:w-4 md:h-4 text-purple-400" />
-                      <h5 className="text-xs md:text-sm font-semibold">Main Subjects</h5>
-                    </div>
-                    <div className="flex flex-wrap gap-1">
-                      {record.courses.map((course, idx) => (
-                        <span
-                          key={idx}
-                          className="px-1.5 py-0.5 bg-gray-800/50 text-gray-300 rounded-full text-[10px] md:text-xs border border-gray-700"
-                        >
-                          {course}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* Stats */}
-                  <div className="mt-3 pt-3 border-t border-gray-800 grid grid-cols-2 gap-2">
-                    <div className="text-center">
-                      <div className="text-sm md:text-xl font-bold text-blue-400">
-                        {record.gpa || record.average}
+                    
+                    {/* School Info */}
+                    <div className="mb-3">
+                      <div className="flex items-center gap-1 mb-1">
+                        <MapPin className="w-3 h-3 md:w-4 md:h-4 text-blue-400" />
+                        <h4 className="text-sm md:text-base font-semibold">{record.school}</h4>
                       </div>
-                      <div className="text-[10px] md:text-xs text-gray-400">
-                        {record.level === 'College' ? 'GPA' : 'Average'}
+                      <p className="text-xs md:text-sm text-gray-300 mb-1">{record.program}</p>
+                      <p className="text-xs text-gray-400">{record.description}</p>
+                    </div>
+                    
+                    {/* Experiences */}
+                    <div className="mb-3">
+                      <div className="flex items-center gap-1 mb-1">
+                        <Users2 className="w-3 h-3 md:w-4 md:h-4 text-green-400" />
+                        <h5 className="text-xs md:text-sm font-semibold">Key Experiences</h5>
+                      </div>
+                      <ul className="space-y-0.5">
+                        {record.experiences.slice(0, isMobile ? 2 : 3).map((experience, idx) => (
+                          <li key={idx} className="flex items-start gap-1">
+                            <ChevronRight className="w-2 h-2 md:w-3 md:h-3 text-blue-400 mt-0.5 flex-shrink-0" />
+                            <span className="text-xs text-gray-300">{experience}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    {/* Courses */}
+                    <div>
+                      <div className="flex items-center gap-1 mb-1">
+                        <Book className="w-3 h-3 md:w-4 md:h-4 text-purple-400" />
+                        <h5 className="text-xs md:text-sm font-semibold">Main Subjects</h5>
+                      </div>
+                      <div className="flex flex-wrap gap-1">
+                        {record.courses.map((course, idx) => (
+                          <span
+                            key={idx}
+                            className="px-1.5 py-0.5 bg-gray-800/50 text-gray-300 rounded-full text-[10px] md:text-xs border border-gray-700"
+                          >
+                            {course}
+                          </span>
+                        ))}
                       </div>
                     </div>
-                    <div className="text-center">
-                      <div className="text-sm md:text-xl font-bold text-green-400">
-                        {record.level === 'College' ? '4' : 
-                         record.level === 'Senior High' ? '2' : 
-                         record.level === 'Junior High' ? '4' : '6'}
+                    
+                    {/* Stats */}
+                    <div className="mt-3 pt-3 border-t border-gray-800 grid grid-cols-2 gap-2">
+                      <div className="text-center">
+                        <div className="text-sm md:text-xl font-bold text-blue-400">
+                          {record.gpa || record.average}
+                        </div>
+                        <div className="text-[10px] md:text-xs text-gray-400">
+                          {record.level === 'College' ? 'GPA' : 'Average'}
+                        </div>
                       </div>
-                      <div className="text-[10px] md:text-xs text-gray-400">Years</div>
+                      <div className="text-center">
+                        <div className="text-sm md:text-xl font-bold text-green-400">
+                          {record.level === 'College' ? '4' : 
+                           record.level === 'Senior High' ? '2' : 
+                           record.level === 'Junior High' ? '4' : '6'}
+                        </div>
+                        <div className="text-[10px] md:text-xs text-gray-400">Years</div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
         
-        {/* Academic Journey Summary - Simplified for mobile */}
+        {/* Academic Journey Summary */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

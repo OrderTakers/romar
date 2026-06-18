@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { GraduationCap, MapPin, Calendar, Code2 } from 'lucide-react';
+import { GraduationCap, MapPin, Calendar, Code2, Briefcase, Award } from 'lucide-react';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
@@ -49,8 +49,9 @@ export default function ProfileHeader() {
                 </div>
               </div>
             </div>
-            <div className="absolute -bottom-2 -right-2 bg-green-500 text-xs px-2 py-0.5 md:px-3 md:py-1 rounded-full">
-              Online
+            {/* Status Badge - Changed to "Open to Work" */}
+            <div className="absolute -bottom-2 -right-2 bg-green-500 text-xs px-2 py-0.5 md:px-3 md:py-1 rounded-full animate-pulse">
+              Open to Work
             </div>
           </div>
           
@@ -59,7 +60,7 @@ export default function ProfileHeader() {
             <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-1 md:mb-2 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               Romar Alquizar 
             </h1>
-            <p className="text-base md:text-xl text-gray-300 mb-2 md:mb-4">Future Web Developer & Full-Stack Developer</p>
+            <p className="text-base md:text-xl text-gray-300 mb-2 md:mb-4">Recent IT Graduate | Aspiring Full-Stack Developer</p>
             
             <div className="flex flex-col sm:flex-row flex-wrap gap-2 md:gap-4 justify-center md:justify-start mb-4 md:mb-6">
               <div className="flex items-center gap-1 md:gap-2 text-xs md:text-base text-gray-300">
@@ -67,18 +68,22 @@ export default function ProfileHeader() {
                 <span className="truncate max-w-[200px] md:max-w-none">BS Information Technology</span>
               </div>
               <div className="flex items-center gap-1 md:gap-2 text-xs md:text-base text-gray-300">
-                <Calendar className="w-4 h-4 md:w-5 md:h-5 text-green-400 flex-shrink-0" />
-                <span>4th Year Student</span>
+                <Award className="w-4 h-4 md:w-5 md:h-5 text-yellow-400 flex-shrink-0" />
+                <span>Class of 2026</span>
+              </div>
+              <div className="flex items-center gap-1 md:gap-2 text-xs md:text-base text-gray-300">
+                <Briefcase className="w-4 h-4 md:w-5 md:h-5 text-green-400 flex-shrink-0" />
+                <span className="truncate max-w-[180px] md:max-w-none">Job Seeker</span>
               </div>
               <div className="flex items-center gap-1 md:gap-2 text-xs md:text-base text-gray-300">
                 <MapPin className="w-4 h-4 md:w-5 md:h-5 text-red-400 flex-shrink-0" />
-                <span className="truncate max-w-[180px] md:max-w-none">CHMSU - Binalbagan</span>
+                <span className="truncate max-w-[180px] md:max-w-none">Carlos Hilado Memorial State University - Binalbagan Campus</span>
               </div>
             </div>
             
             <p className="text-xs md:text-sm lg:text-base text-gray-400 max-w-2xl mx-auto md:mx-0 px-2 md:px-0">
-              A BSIT student with a HUMSS background, bringing unique perspectives in human-centered design to technology. 
-              Passionate about creating web solutions that are both technically sound and user-friendly.
+              A recent BSIT graduate with a unique HUMSS background, bringing diverse perspectives in human-centered design to technology. 
+              Eager to apply full-stack development skills and contribute to innovative projects as a Junior Developer.
             </p>
 
             {/* Tech Stack Display */}
@@ -99,6 +104,20 @@ export default function ProfileHeader() {
                   </span>
                 )}
               </div>
+            </div>
+
+            {/* Resume Download Button - Only this remains */}
+            <div className="mt-4 md:mt-6">
+              <a
+                href="/components/resume/ga.pdf"
+                download
+                className="inline-flex items-center gap-2 px-4 py-2 md:px-6 md:py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg text-sm md:text-base font-semibold hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
+              >
+                <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Download Resume
+              </a>
             </div>
           </div>
         </div>

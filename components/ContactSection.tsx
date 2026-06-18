@@ -130,7 +130,7 @@ export default function ContactSection() {
                   {!isMobile && 'GitHub'}
                 </a>
                 <a
-                  href="https://web.facebook.com/marskirtzzz"
+                  href="https://www.facebook.com/profile.php?id=61590715592007"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-1 md:gap-2 px-2 md:px-4 py-2 md:py-3 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors group text-xs md:text-sm"
@@ -149,16 +149,15 @@ export default function ContactSection() {
                 </a>
               </div>
               
-              {/* Resume Button */}
+              {/* Resume Button - Changed to Download */}
               <div className="pt-3 md:pt-4 border-t border-gray-800">
                 <a
-                  href="/resume/Romar-Alquizar-Resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/resume/ga  .pdf"
+                  download="Romar-Alquizar-Resume.pdf"
                   className="flex items-center justify-center gap-1 md:gap-2 px-4 md:px-6 py-2.5 md:py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 rounded-lg transition-all w-full group text-sm md:text-base"
                 >
                   <FileText className="w-4 h-4 md:w-5 md:h-5 group-hover:scale-110 transition-transform" />
-                  View Resume
+                  Download Resume
                 </a>
               </div>
             </div>
