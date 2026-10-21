@@ -52,7 +52,7 @@ const academicRecords = [
   },
   {
     level: 'Senior High',
-    period: '2021 - 2022',
+    period: '2020 - 2022',
     school: 'San Ramon Catholic School',
     program: 'Humanities (HUMSS)',
     description: 'Developed strong communication and critical thinking skills.',
@@ -68,7 +68,7 @@ const academicRecords = [
   },
   {
     level: 'Junior High',
-    period: '2019 - 2020',
+    period: '2016 - 2020',
     school: 'San Ramon Catholic School',
     program: 'Regular Academic',
     description: 'Built foundational knowledge across various subjects.',
@@ -84,7 +84,7 @@ const academicRecords = [
   },
   {
     level: 'Elementary',
-    period: '2015 - 2016',
+    period: '2010 - 2016',
     school: 'Cong. Elesio P. Limsiaco Memorial School',
     program: 'Elementary Education',
     description: 'Basic education focusing on fundamental skills.',
