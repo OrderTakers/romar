@@ -1,10 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { 
-  School, 
-  GraduationCap, 
-  BookOpen, 
+import {
+  School,
+  GraduationCap,
+  BookOpen,
   Calendar,
   MapPin,
   Users2,
@@ -12,12 +12,28 @@ import {
   Brain,
   Target,
   Globe,
-  PenTool,
-  Book
+  Book,
+  Award,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const academicRecords = [
+  {
+    level: 'TESDA NC III (Web Development)',
+    period: '2026 - Present',
+    school: 'Technical Education and Skills Development Authority',
+    program: 'Web Development NC III',
+    description: 'Currently studying — building advanced web development skills and earning national certification.',
+    experiences: [
+      'Currently enrolled in Web Development NC III',
+      'Hands-on training in front-end and back-end development',
+      'Working toward TESDA national certification',
+    ],
+    courses: ['HTML & CSS', 'JavaScript', 'Responsive Design', 'Web Application Development'],
+    color: 'from-yellow-500 to-amber-600',
+    icon: Award,
+    status: 'Currently Studying',
+  },
   {
     level: 'College',
     period: '2022 - 2026',
@@ -27,12 +43,12 @@ const academicRecords = [
     experiences: [
       'Active in class projects and group activities',
       'Developed basic web applications',
-      'Learning full-stack development independently'
+      'Learning full-stack development independently',
     ],
     courses: ['Web Technologies', 'Database Systems', 'OOP', 'Networking'],
     color: 'from-blue-600 to-cyan-600',
     icon: GraduationCap,
-    gpa: '2.8'
+    gpa: '2.8',
   },
   {
     level: 'Senior High',
@@ -43,12 +59,12 @@ const academicRecords = [
     experiences: [
       'Active in class discussions',
       'Participated in journalism',
-      'Developed research papers'
+      'Developed research papers',
     ],
     courses: ['Creative Writing', 'Social Sciences', 'Philosophy'],
     color: 'from-purple-600 to-pink-600',
     icon: Globe,
-    average: '85.5'
+    average: '85.5',
   },
   {
     level: 'Junior High',
@@ -59,12 +75,12 @@ const academicRecords = [
     experiences: [
       'Active in classroom activities',
       'Learned basic computer operations',
-      'Developed interest in digital arts'
+      'Developed interest in digital arts',
     ],
     courses: ['Computer Education', 'English', 'Science'],
     color: 'from-green-600 to-emerald-600',
     icon: BookOpen,
-    average: '84.2'
+    average: '84.2',
   },
   {
     level: 'Elementary',
@@ -75,12 +91,12 @@ const academicRecords = [
     experiences: [
       'Participated in classroom activities',
       'Learned basic computer operations',
-      'Active in school programs'
+      'Active in school programs',
     ],
     courses: ['Mathematics', 'English', 'Science', 'Computer Basics'],
     color: 'from-amber-600 to-orange-600',
     icon: School,
-    average: '83.5'
+    average: '83.5',
   },
 ];
 
@@ -101,6 +117,7 @@ export default function AcademicRecordsSection() {
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.8 }}
         className="backdrop-blur-lg bg-black/30 border border-gray-800 rounded-xl md:rounded-2xl p-4 md:p-8"
       >
@@ -111,56 +128,58 @@ export default function AcademicRecordsSection() {
             HUMSS to IT
           </span>
         </div>
-        
+
         {/* Timeline */}
         <div className="relative">
-          {/* Timeline Line - Centered on desktop, left on mobile */}
-          <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-emerald-500 md:left-1/2 md:-translate-x-0.5"></div>
-          
+          <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-yellow-500 via-blue-500 to-emerald-500 md:left-1/2 md:-translate-x-0.5"></div>
+
           {academicRecords.map((record, index) => {
-            // Alternate sides: even index = right, odd index = left
             const isEven = index % 2 === 0;
-            
+
             return (
               <motion.div
                 key={record.level}
                 initial={{ opacity: 0, x: isEven ? 20 : -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
                 className={`relative mb-6 md:mb-12 ${
-                  isEven 
-                    ? 'md:ml-auto md:pl-8 md:w-1/2' 
+                  isEven
+                    ? 'md:ml-auto md:pl-8 md:w-1/2'
                     : 'md:mr-auto md:pr-8 md:w-1/2'
                 }`}
               >
                 {/* Timeline Dot */}
                 <div className={`absolute left-2 top-2 w-4 h-4 rounded-full bg-gradient-to-r ${record.color} border-4 border-gray-900 md:left-auto ${
-                  isEven 
-                    ? 'md:-left-4' 
-                    : 'md:-right-4 md:left-auto'
+                  isEven ? 'md:-left-4' : 'md:-right-4 md:left-auto'
                 }`}></div>
-                
-                <div className={`ml-10 md:ml-0 ${
-                  isEven ? 'md:ml-0' : 'md:mr-0'
-                }`}>
+
+                <div className={`ml-10 md:ml-0 ${isEven ? 'md:ml-0' : 'md:mr-0'}`}>
                   {/* Card */}
                   <div className={`bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-xl md:rounded-2xl p-4 md:p-6 hover:border-blue-500/50 transition-all ${
                     !isEven && 'md:mr-2'
-                  }`}>
+                  } ${record.status ? 'ring-1 ring-yellow-500/30' : ''}`}>
                     {/* Header */}
                     <div className="flex items-start gap-3 mb-3">
                       <div className={`p-2 md:p-3 rounded-xl bg-gradient-to-r ${record.color}`}>
                         <record.icon className="w-4 h-4 md:w-6 md:h-6 text-white" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-base md:text-xl font-bold">{record.level}</h3>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="text-base md:text-xl font-bold">{record.level}</h3>
+                          {record.status && (
+                            <span className="text-[10px] md:text-xs px-2 py-0.5 bg-yellow-500/20 text-yellow-300 rounded-full border border-yellow-500/30 animate-pulse">
+                              {record.status}
+                            </span>
+                          )}
+                        </div>
                         <div className="flex items-center gap-1 text-xs text-gray-400 mt-0.5">
                           <Calendar className="w-3 h-3 md:w-4 md:h-4" />
                           <span>{record.period}</span>
                         </div>
                       </div>
                     </div>
-                    
+
                     {/* School Info */}
                     <div className="mb-3">
                       <div className="flex items-center gap-1 mb-1">
@@ -170,7 +189,7 @@ export default function AcademicRecordsSection() {
                       <p className="text-xs md:text-sm text-gray-300 mb-1">{record.program}</p>
                       <p className="text-xs text-gray-400">{record.description}</p>
                     </div>
-                    
+
                     {/* Experiences */}
                     <div className="mb-3">
                       <div className="flex items-center gap-1 mb-1">
@@ -186,7 +205,7 @@ export default function AcademicRecordsSection() {
                         ))}
                       </ul>
                     </div>
-                    
+
                     {/* Courses */}
                     <div>
                       <div className="flex items-center gap-1 mb-1">
@@ -204,24 +223,28 @@ export default function AcademicRecordsSection() {
                         ))}
                       </div>
                     </div>
-                    
-                    {/* Stats */}
-                    <div className="mt-3 pt-3 border-t border-gray-800 grid grid-cols-2 gap-2">
+
+                    {/* Stats — TESDA shows Status only, others show GPA/Average + Status */}
+                    <div className={`mt-3 pt-3 border-t border-gray-800 grid gap-2 ${
+                      record.status ? 'grid-cols-1' : 'grid-cols-2'
+                    }`}>
+                      {!record.status && (
+                        <div className="text-center">
+                          <div className="text-sm md:text-xl font-bold text-blue-400">
+                            {record.gpa || record.average}
+                          </div>
+                          <div className="text-[10px] md:text-xs text-gray-400">
+                            {record.level === 'College' ? 'GPA' : record.gpa ? 'GPA' : 'Average'}
+                          </div>
+                        </div>
+                      )}
                       <div className="text-center">
-                        <div className="text-sm md:text-xl font-bold text-blue-400">
-                          {record.gpa || record.average}
+                        <div className={`text-sm md:text-xl font-bold ${
+                          record.status ? 'text-yellow-400' : 'text-green-400'
+                        }`}>
+                          {record.status ? 'Ongoing' : 'Completed'}
                         </div>
-                        <div className="text-[10px] md:text-xs text-gray-400">
-                          {record.level === 'College' ? 'GPA' : 'Average'}
-                        </div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-sm md:text-xl font-bold text-green-400">
-                          {record.level === 'College' ? '4' : 
-                           record.level === 'Senior High' ? '2' : 
-                           record.level === 'Junior High' ? '4' : '6'}
-                        </div>
-                        <div className="text-[10px] md:text-xs text-gray-400">Years</div>
+                        <div className="text-[10px] md:text-xs text-gray-400">Status</div>
                       </div>
                     </div>
                   </div>
@@ -230,17 +253,18 @@ export default function AcademicRecordsSection() {
             );
           })}
         </div>
-        
+
         {/* Academic Journey Summary */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-6 md:mt-12 backdrop-blur-lg bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-800/30 rounded-xl md:rounded-2xl p-4 md:p-8"
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             <div className="text-center">
-              <div className="text-xl md:text-3xl lg:text-4xl font-bold text-white mb-0.5 md:mb-2">4</div>
+              <div className="text-xl md:text-3xl lg:text-4xl font-bold text-white mb-0.5 md:mb-2">5</div>
               <div className="text-xs md:text-sm text-gray-300">Education Levels</div>
             </div>
             <div className="text-center">
@@ -248,15 +272,15 @@ export default function AcademicRecordsSection() {
               <div className="text-xs md:text-sm text-gray-300">SHS Strand</div>
             </div>
             <div className="text-center">
-              <div className="text-lg md:text-2xl lg:text-4xl font-bold text-yellow-400 mb-0.5 md:mb-2">16+</div>
-              <div className="text-xs md:text-sm text-gray-300">Years Learning</div>
+              <div className="text-base md:text-xl lg:text-3xl font-bold text-yellow-400 mb-0.5 md:mb-2">WEB DEV</div>
+              <div className="text-xs md:text-sm text-gray-300">TESDA</div>
             </div>
             <div className="text-center">
               <div className="text-lg md:text-2xl lg:text-4xl font-bold text-pink-400 mb-0.5 md:mb-2">IT</div>
               <div className="text-xs md:text-sm text-gray-300">College Course</div>
             </div>
           </div>
-          
+
           <div className="mt-4 md:mt-8">
             <h4 className="text-sm md:text-xl font-semibold mb-3 md:mb-4 text-center">From HUMSS to IT</h4>
             <div className="grid grid-cols-1 gap-2 md:grid-cols-3 md:gap-4">
@@ -277,10 +301,12 @@ export default function AcademicRecordsSection() {
               </div>
             </div>
           </div>
-          
+
           <div className="mt-4 md:mt-6 text-center">
             <p className="text-xs md:text-sm text-gray-300">
-              <span className="text-blue-400 font-semibold">"HUMSS background gives unique perspective in creating human-centered solutions."</span>
+              <span className="text-blue-400 font-semibold">
+                &ldquo;HUMSS background gives unique perspective in creating human-centered solutions.&rdquo;
+              </span>
             </p>
           </div>
         </motion.div>
