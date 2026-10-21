@@ -5,9 +5,10 @@ import SkillsSection from '@/components/SkillsSection';
 import ProjectsSection from '@/components/ProjectsSection';
 import WorkSection from '@/components/WorkSection';
 import ContactSection from '@/components/ContactSection';
+import AchievementsSection from '@/components/AchivementSection';
 
 export const metadata: Metadata = {
-  title: 'Romar Alquizar | IT Graduate Portfolio',
+  title: 'Romar Alquizar Portfolio',
   description: 'Portfolio of a BSIT Graduate showcasing projects, skills, and work experience',
 };
 
@@ -25,11 +26,11 @@ export default function Home() {
         <SkillsSection />
         <WorkSection />
         <ProjectsSection />
+        <AchievementsSection />
         <ContactSection />
         
         <footer className="mt-16 text-center text-gray-400 border-t border-gray-800 pt-8">
-          <p className="mb-2">© {new Date().getFullYear()} Romar Alquizar | BSIT Graduate Portfolio</p>
-          <p className="text-sm">Built with Next.js, Three.js, TypeScript & Tailwind</p>
+          <p className="mb-2">© {new Date().getFullYear()} Romar Alquizar Portfolio</p>
         </footer>
       </div>
     </main>

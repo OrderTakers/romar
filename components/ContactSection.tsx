@@ -9,9 +9,9 @@ export default function ContactSection() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
   });
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [submitMessage, setSubmitMessage] = useState('');
@@ -26,21 +26,59 @@ export default function ContactSection() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Auto-clear success message after 6s
+  useEffect(() => {
+    if (submitStatus === 'success') {
+      const timer = setTimeout(() => {
+        setSubmitStatus('idle');
+        setSubmitMessage('');
+      }, 6000);
+      return () => clearTimeout(timer);
+    }
+  }, [submitStatus]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const message = formData.message.trim();
+
+    if (!name || !email || !message) {
+      setSubmitStatus('error');
+      setSubmitMessage('Please fill in all fields.');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setSubmitStatus('error');
+      setSubmitMessage('Please enter a valid email address.');
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
     setSubmitMessage('');
 
     try {
+      const now = new Date();
+
       const result = await emailjs.send(
         'service_x8zdpm2',
         'template_t2g584k',
         {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
+          from_name: name,
+          from_email: email,
+          reply_to: email,
+          message: message,
           to_email: 'romaralquizar10@gmail.com',
+          time: now.toLocaleTimeString('en-PH', {
+            timeZone: 'Asia/Manila',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+          }),
         },
         'cF_YlB2eXU1mjnM_b'
       );
@@ -61,10 +99,33 @@ export default function ContactSection() {
     }
   };
 
+  // Existing mailto helper
   const handleMailTo = () => {
+    const now = new Date();
+    const sentAt = now.toLocaleTimeString('en-PH', {
+      timeZone: 'Asia/Manila',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    });
+
     const subject = encodeURIComponent('Message from Portfolio Website');
     const body = encodeURIComponent(
-      `Hello Romar,\n\nMy name is ${formData.name}.\n\n${formData.message}\n\nBest regards,\n${formData.name}\n${formData.email}`
+      `Hello Romar,\n\nMy name is ${formData.name}.\n\n${formData.message}\n\nBest regards,\n${formData.name}\n${formData.email}\n\n---\nSent: ${sentAt} (PHT)`
+    );
+    window.location.href = `mailto:romaralquizar10@gmail.com?subject=${subject}&body=${body}`;
+  };
+
+  // New: email your account directly with prefilled fields
+  const handleEmailMe = () => {
+    const subject = encodeURIComponent('Message from Portfolio Visitor');
+    const body = encodeURIComponent(
+      `Hello Romar,\n\n` +
+        `I'd like to get in touch with you.\n\n` +
+        `${formData.message ? `Message:\n${formData.message}\n\n` : ''}` +
+        `${formData.name ? `From: ${formData.name}\n` : ''}` +
+        `${formData.email ? `Email: ${formData.email}\n` : ''}` +
+        `\n---\nSent from your portfolio website.`
     );
     window.location.href = `mailto:romaralquizar10@gmail.com?subject=${subject}&body=${body}`;
   };
@@ -72,7 +133,7 @@ export default function ContactSection() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -81,18 +142,19 @@ export default function ContactSection() {
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.8 }}
         className="backdrop-blur-lg bg-black/30 border border-gray-800 rounded-xl md:rounded-2xl p-4 md:p-8"
       >
         <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-8">Get In Touch</h2>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
           {/* Contact Info */}
           <div>
             <p className="text-sm md:text-base text-gray-400 mb-4 md:mb-8">
               Open to internship opportunities, collaborative projects, and tech discussions.
             </p>
-            
+
             <div className="space-y-4 md:space-y-6">
               <div className="flex items-center gap-3 md:gap-4">
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
@@ -100,16 +162,16 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="text-xs md:text-sm text-gray-400">Email</p>
-                  <a 
-                    href="mailto:romaralquizar10@gmail.com" 
+                  <a
+                    href="mailto:romaralquizar10@gmail.com"
                     className="text-sm md:text-base text-blue-400 hover:text-blue-300 transition-colors break-all"
                   >
                     romaralquizar10@gmail.com
                   </a>
                 </div>
               </div>
-              
-              {/* Social Links - Grid adjusted for mobile */}
+
+              {/* Social Links */}
               <div className="grid grid-cols-2 gap-2 md:gap-4">
                 <a
                   href="https://www.linkedin.com/in/alquizar-romar-088225350/?skipRedirect=true"
@@ -148,12 +210,13 @@ export default function ContactSection() {
                   {!isMobile && 'Instagram'}
                 </a>
               </div>
-              
-              {/* Resume Button - Changed to Download */}
+
+              {/* Resume Button */}
               <div className="pt-3 md:pt-4 border-t border-gray-800">
                 <a
-                  href="/resume/ga  .pdf"
-                  download="Romar-Alquizar-Resume.pdf"
+                  href="/resume/romar.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-center gap-1 md:gap-2 px-4 md:px-6 py-2.5 md:py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 rounded-lg transition-all w-full group text-sm md:text-base"
                 >
                   <FileText className="w-4 h-4 md:w-5 md:h-5 group-hover:scale-110 transition-transform" />
@@ -162,7 +225,7 @@ export default function ContactSection() {
               </div>
             </div>
           </div>
-          
+
           {/* Contact Form */}
           <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
             <div>
@@ -178,7 +241,7 @@ export default function ContactSection() {
                 disabled={isSubmitting}
               />
             </div>
-            
+
             <div>
               <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">Email</label>
               <input
@@ -192,7 +255,7 @@ export default function ContactSection() {
                 disabled={isSubmitting}
               />
             </div>
-            
+
             <div>
               <label className="block text-xs md:text-sm text-gray-400 mb-1 md:mb-2">Message</label>
               <textarea
@@ -206,20 +269,19 @@ export default function ContactSection() {
                 disabled={isSubmitting}
               />
             </div>
-            
-            {/* Status Messages */}
+
             {submitStatus === 'success' && (
               <div className="p-2 md:p-3 bg-green-500/20 border border-green-500/30 rounded-lg">
                 <p className="text-green-400 text-xs md:text-sm">{submitMessage}</p>
               </div>
             )}
-            
+
             {submitStatus === 'error' && (
               <div className="p-2 md:p-3 bg-red-500/20 border border-red-500/30 rounded-lg">
                 <p className="text-red-400 text-xs md:text-sm">{submitMessage}</p>
               </div>
             )}
-            
+
             <div className="space-y-2 md:space-y-3">
               <motion.button
                 whileHover={{ scale: 1.02 }}
@@ -227,8 +289,8 @@ export default function ContactSection() {
                 type="submit"
                 disabled={isSubmitting}
                 className={`flex items-center justify-center gap-1 md:gap-2 w-full px-4 md:px-6 py-2.5 md:py-3 rounded-lg transition-all text-sm md:text-base ${
-                  isSubmitting 
-                    ? 'bg-gray-700 cursor-not-allowed' 
+                  isSubmitting
+                    ? 'bg-gray-700 cursor-not-allowed'
                     : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
                 }`}
               >
@@ -244,18 +306,17 @@ export default function ContactSection() {
                   </>
                 )}
               </motion.button>
-              
-              {/* Alternative email button */}
+
               <button
                 type="button"
-                onClick={handleMailTo}
+                onClick={handleEmailMe}
                 className="flex items-center justify-center gap-1 md:gap-2 w-full px-4 md:px-6 py-2 md:py-3 bg-gray-800/50 hover:bg-gray-800 rounded-lg transition-colors text-xs md:text-sm"
               >
                 <Mail className="w-3 h-3 md:w-4 md:h-4" />
-                Use email client
+                Email Me Directly
               </button>
             </div>
-            
+
             <div className="text-center text-gray-500 text-xs pt-2 md:pt-4">
               <p>I typically respond within 24 hours</p>
             </div>
